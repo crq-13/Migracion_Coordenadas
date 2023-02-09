@@ -1,6 +1,5 @@
 import concurrent.futures
 import requests
-from multiprocessing import Process, Pool
 import json
 
 
@@ -40,18 +39,18 @@ def Web_conex(url, timeout=300, save_html_file=False):
 if __name__ == '__main__':
     # Obtener las urls
     urls = Get_urls(JSONFILE, DEBUG)
-    #Web_conex(urls[0], save_html_file=True)
+    Web_conex(urls[0], save_html_file=True)
 
     # Crear la concurrencia
-    with concurrent.futures.ThreadPoolExecutor(max_workers=NPROC) as executor:
-        # Ejecutar las peticiones
-        results = (executor.submit(Web_conex, url) for url in urls)
-        for f in concurrent.futures.as_completed(results):
-            try:
-                data = f.result()
-            except Exception as exc:
-                data = str(type(exc))
-            finally:
-                OUT.append(data)
-                print(str(len(OUT)), end='\r')
-    print(OUT)
+    # with concurrent.futures.ThreadPoolExecutor(max_workers=NPROC) as executor:
+    #     # Ejecutar las peticiones
+    #     results = (executor.submit(Web_conex, url) for url in urls)
+    #     for f in concurrent.futures.as_completed(results):
+    #         try:
+    #             data = f.result()
+    #         except Exception as exc:
+    #             data = str(type(exc))
+    #         finally:
+    #             OUT.append(data)
+    #             print(str(len(OUT)), end='\r')
+    # print(OUT)
